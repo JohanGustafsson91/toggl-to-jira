@@ -1,0 +1,23 @@
+{
+  "name": "toggl-to-jira",
+  "version": "1.0.0",
+  "description": "Get worklogs for jira CLI",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "test": "jest"
+  },
+  "author": "johan.gustafsson91@gmail.com",
+  "license": "ISC",
+  "keywords": [],
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3",
+    "@types/node": "^22.8.1",
+    "jest": "^29.7.0",
+    "msw": "^2.5.2",
+    "ts-jest": "^29.2.5"
+  }
+}
