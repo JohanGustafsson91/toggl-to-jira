@@ -86,6 +86,8 @@ function groupByTicketNumber({
         const previous = acc[ticketNumber];
         const previousDescription = previous?.description ?? "";
         const currentDescription = description.trim();
+        const sameDescriptionForTimeEntry =
+          previousDescription.includes(currentDescription);
 
         return {
           ...acc,
@@ -93,12 +95,8 @@ function groupByTicketNumber({
             totalDurationInMinutes:
               (previous?.totalDurationInMinutes ?? 0) + curr.durationInMinutes,
             description: `${previousDescription}${
-              previousDescription ? ". " : ""
-            }${
-              !previousDescription.includes(currentDescription)
-                ? currentDescription
-                : ""
-            }`,
+              previousDescription && !sameDescriptionForTimeEntry ? ". " : ""
+            }${!sameDescriptionForTimeEntry ? currentDescription : ""}`,
             entries: [
               ...(previous?.entries ?? []),
               {
@@ -163,10 +161,8 @@ function presentResult({
   };
 }
 
-// Utility functions for time conversion and rounding
-
 function roundToNearestMinutes(minutes: number, roundToMinutes = 10): number {
-  return Math.round(minutes / roundToMinutes) * roundToMinutes;
+  return Math.ceil(minutes / roundToMinutes) * roundToMinutes;
 }
 
 function minutesToTimeString(totalMinutes: number): string {
@@ -174,8 +170,6 @@ function minutesToTimeString(totalMinutes: number): string {
   const minutes = totalMinutes % 60;
   return `${hours}h ${minutes}m`;
 }
-
-// Interfaces for type definitions
 
 interface Entry {
   description: string;
